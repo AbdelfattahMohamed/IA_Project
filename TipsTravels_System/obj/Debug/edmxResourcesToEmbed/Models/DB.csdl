@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TripsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Inbox">
+    <Key>
+      <PropertyRef Name="MsgID" />
+    </Key>
+    <Property Name="MsgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonFromID" Type="Int32" />
+    <Property Name="PersonToID" Type="Int32" />
+    <Property Name="DateOfMessage" Type="DateTime" Precision="0" />
+    <Property Name="MsgContent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Person" Relationship="Self.FK_Inbox_Persons2" FromRole="Inbox" ToRole="Persons" />
+    <NavigationProperty Name="Person1" Relationship="Self.FK_Inbox_Persons3" FromRole="Inbox" ToRole="Persons" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonID" />
+    </Key>
+    <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Role" Type="Int32" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="Inboxes" Relationship="Self.FK_Inbox_Persons2" FromRole="Persons" ToRole="Inbox" />
+    <NavigationProperty Name="Inboxes1" Relationship="Self.FK_Inbox_Persons3" FromRole="Persons" ToRole="Inbox" />
+    <NavigationProperty Name="Role1" Relationship="Self.FK_Persons_Roles" FromRole="Persons" ToRole="Roles" />
+    <NavigationProperty Name="Posts" Relationship="Self.FK_Posts_Persons" FromRole="Persons" ToRole="Posts" />
+    <NavigationProperty Name="PostsStatus" Relationship="Self.FK_PostsStatus_Persons" FromRole="Persons" ToRole="PostsStatus" />
+    <NavigationProperty Name="Posts1" Relationship="Self.SavedPosts" FromRole="Persons" ToRole="Posts" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="PostID" />
+    </Key>
+    <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonID" Type="Int32" Nullable="false" />
+    <Property Name="TripTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TripDetails" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="PostDate" Type="DateTime" Precision="0" />
+    <Property Name="TripDate" Type="DateTime" Precision="0" />
+    <Property Name="TripDestination" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TripImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="TripPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsApproved" Type="Int32" />
+    <NavigationProperty Name="Person" Relationship="Self.FK_Posts_Persons" FromRole="Posts" ToRole="Persons" />
+    <NavigationProperty Name="PostsStatus" Relationship="Self.FK_PostsStatus_Posts" FromRole="Posts" ToRole="PostsStatus" />
+    <NavigationProperty Name="Persons" Relationship="Self.SavedPosts" FromRole="Posts" ToRole="Persons" />
+  </EntityType>
+  <EntityType Name="PostsStatu">
+    <Key>
+      <PropertyRef Name="PersonID" />
+      <PropertyRef Name="PostsID" />
+    </Key>
+    <Property Name="PersonID" Type="Int32" Nullable="false" />
+    <Property Name="PostsID" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="Self.FK_PostsStatus_Persons" FromRole="PostsStatus" ToRole="Persons" />
+    <NavigationProperty Name="Post" Relationship="Self.FK_PostsStatus_Posts" FromRole="PostsStatus" ToRole="Posts" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Persons" Relationship="Self.FK_Persons_Roles" FromRole="Roles" ToRole="Persons" />
+  </EntityType>
+  <Association Name="FK_Inbox_Persons2">
+    <End Role="Persons" Type="Self.Person" Multiplicity="0..1" />
+    <End Role="Inbox" Type="Self.Inbox" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="Inbox">
+        <PropertyRef Name="PersonFromID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inbox_Persons3">
+    <End Role="Persons" Type="Self.Person" Multiplicity="0..1" />
+    <End Role="Inbox" Type="Self.Inbox" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="Inbox">
+        <PropertyRef Name="PersonToID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persons_Roles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Persons" Type="Self.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Persons">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Persons">
+    <End Role="Persons" Type="Self.Person" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Posts" Type="Self.Post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsStatus_Persons">
+    <End Role="Persons" Type="Self.Person" Multiplicity="1" />
+    <End Role="PostsStatus" Type="Self.PostsStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PostsStatus">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsStatus_Posts">
+    <End Role="Posts" Type="Self.Post" Multiplicity="1" />
+    <End Role="PostsStatus" Type="Self.PostsStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="PostsStatus">
+        <PropertyRef Name="PostsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SavedPosts">
+    <End Role="Persons" Type="Self.Person" Multiplicity="*" />
+    <End Role="Posts" Type="Self.Post" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="TripsDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Inboxes" EntityType="Self.Inbox" />
+    <EntitySet Name="Persons" EntityType="Self.Person" />
+    <EntitySet Name="Posts" EntityType="Self.Post" />
+    <EntitySet Name="PostsStatus" EntityType="Self.PostsStatu" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <AssociationSet Name="FK_Inbox_Persons2" Association="Self.FK_Inbox_Persons2">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Inbox" EntitySet="Inboxes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inbox_Persons3" Association="Self.FK_Inbox_Persons3">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Inbox" EntitySet="Inboxes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persons_Roles" Association="Self.FK_Persons_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Persons" EntitySet="Persons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Persons" Association="Self.FK_Posts_Persons">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsStatus_Persons" Association="Self.FK_PostsStatus_Persons">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="PostsStatus" EntitySet="PostsStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsStatus_Posts" Association="Self.FK_PostsStatus_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="PostsStatus" EntitySet="PostsStatus" />
+    </AssociationSet>
+    <AssociationSet Name="SavedPosts" Association="Self.SavedPosts">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <FunctionImport Name="InsertUsers">
+      <Parameter Name="p1" Mode="In" Type="String" />
+      <Parameter Name="p2" Mode="In" Type="String" />
+      <Parameter Name="p3" Mode="In" Type="String" />
+      <Parameter Name="p4" Mode="In" Type="String" />
+      <Parameter Name="p5" Mode="In" Type="Binary" />
+      <Parameter Name="p6" Mode="In" Type="Int32" />
+      <Parameter Name="p7" Mode="In" Type="String" />
+      <Parameter Name="p8" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateUsers">
+      <Parameter Name="p1" Mode="In" Type="String" />
+      <Parameter Name="p2" Mode="In" Type="String" />
+      <Parameter Name="p3" Mode="In" Type="String" />
+      <Parameter Name="p4" Mode="In" Type="String" />
+      <Parameter Name="p5" Mode="In" Type="Binary" />
+      <Parameter Name="p6" Mode="In" Type="String" />
+      <Parameter Name="p7" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

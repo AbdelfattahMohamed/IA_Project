@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TripsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Inbox">
+    <Key>
+      <PropertyRef Name="MsgID" />
+    </Key>
+    <Property Name="MsgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonFromID" Type="int" />
+    <Property Name="PersonToID" Type="int" />
+    <Property Name="DateOfMessage" Type="date" />
+    <Property Name="MsgContent" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Persons">
+    <Key>
+      <PropertyRef Name="PersonID" />
+    </Key>
+    <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="LName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+    <Property Name="Photo" Type="image" />
+    <Property Name="Role" Type="int" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="PostID" />
+    </Key>
+    <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="TripTitle" Type="nvarchar" MaxLength="50" />
+    <Property Name="TripDetails" Type="nvarchar" MaxLength="250" />
+    <Property Name="PostDate" Type="date" />
+    <Property Name="TripDate" Type="date" />
+    <Property Name="TripDestination" Type="nvarchar" MaxLength="50" />
+    <Property Name="TripImage" Type="image" />
+    <Property Name="TripPrice" Type="money" />
+    <Property Name="IsApproved" Type="int" />
+  </EntityType>
+  <EntityType Name="PostsStatus">
+    <Key>
+      <PropertyRef Name="PersonID" />
+      <PropertyRef Name="PostsID" />
+    </Key>
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="PostsID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SavedPosts">
+    <Key>
+      <PropertyRef Name="PersonID" />
+      <PropertyRef Name="PostID" />
+    </Key>
+    <Property Name="PersonID" Type="int" Nullable="false" />
+    <Property Name="PostID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Inbox_Persons2">
+    <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+    <End Role="Inbox" Type="Self.Inbox" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="Inbox">
+        <PropertyRef Name="PersonFromID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inbox_Persons3">
+    <End Role="Persons" Type="Self.Persons" Multiplicity="0..1" />
+    <End Role="Inbox" Type="Self.Inbox" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="Inbox">
+        <PropertyRef Name="PersonToID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persons_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Persons" Type="Self.Persons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Persons">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posts_Persons">
+    <End Role="Persons" Type="Self.Persons" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsStatus_Persons">
+    <End Role="Persons" Type="Self.Persons" Multiplicity="1" />
+    <End Role="PostsStatus" Type="Self.PostsStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="PostsStatus">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PostsStatus_Posts">
+    <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+    <End Role="PostsStatus" Type="Self.PostsStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="PostsStatus">
+        <PropertyRef Name="PostsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SavedPosts_Persons">
+    <End Role="Persons" Type="Self.Persons" Multiplicity="1" />
+    <End Role="SavedPosts" Type="Self.SavedPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persons">
+        <PropertyRef Name="PersonID" />
+      </Principal>
+      <Dependent Role="SavedPosts">
+        <PropertyRef Name="PersonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SavedPosts_Posts">
+    <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+    <End Role="SavedPosts" Type="Self.SavedPosts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="SavedPosts">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Decrypt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+    <Parameter Name="p1" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="Encrypt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary(max)">
+    <Parameter Name="p1" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="InsertUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p1" Type="nvarchar" Mode="In" />
+    <Parameter Name="p2" Type="nvarchar" Mode="In" />
+    <Parameter Name="p3" Type="nvarchar" Mode="In" />
+    <Parameter Name="p4" Type="nvarchar" Mode="In" />
+    <Parameter Name="p5" Type="image" Mode="In" />
+    <Parameter Name="p6" Type="int" Mode="In" />
+    <Parameter Name="p7" Type="nvarchar" Mode="In" />
+    <Parameter Name="p8" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="UpdateUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="p1" Type="nvarchar" Mode="In" />
+    <Parameter Name="p2" Type="nvarchar" Mode="In" />
+    <Parameter Name="p3" Type="nvarchar" Mode="In" />
+    <Parameter Name="p4" Type="nvarchar" Mode="In" />
+    <Parameter Name="p5" Type="image" Mode="In" />
+    <Parameter Name="p6" Type="nvarchar" Mode="In" />
+    <Parameter Name="p7" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="TripsDBModelStoreContainer">
+    <EntitySet Name="Inbox" EntityType="Self.Inbox" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PostsStatus" EntityType="Self.PostsStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SavedPosts" EntityType="Self.SavedPosts" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Inbox_Persons2" Association="Self.FK_Inbox_Persons2">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Inbox" EntitySet="Inbox" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inbox_Persons3" Association="Self.FK_Inbox_Persons3">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Inbox" EntitySet="Inbox" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persons_Roles" Association="Self.FK_Persons_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Persons" EntitySet="Persons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posts_Persons" Association="Self.FK_Posts_Persons">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsStatus_Persons" Association="Self.FK_PostsStatus_Persons">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="PostsStatus" EntitySet="PostsStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PostsStatus_Posts" Association="Self.FK_PostsStatus_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="PostsStatus" EntitySet="PostsStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SavedPosts_Persons" Association="Self.FK_SavedPosts_Persons">
+      <End Role="Persons" EntitySet="Persons" />
+      <End Role="SavedPosts" EntitySet="SavedPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SavedPosts_Posts" Association="Self.FK_SavedPosts_Posts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="SavedPosts" EntitySet="SavedPosts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

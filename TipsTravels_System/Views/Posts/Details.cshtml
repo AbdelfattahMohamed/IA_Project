@@ -1,0 +1,90 @@
+﻿@model TipsTravels_System.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TripTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TripTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TripDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TripDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TripDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TripDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TripDestination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TripDestination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TripImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TripImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TripPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TripPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsApproved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsApproved)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.FName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.FName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PostID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TripsDBModelStoreContainer" CdmEntityContainer="TripsDBEntities">
+    <EntitySetMapping Name="Inboxes">
+      <EntityTypeMapping TypeName="TripsDBModel.Inbox">
+        <MappingFragment StoreEntitySet="Inbox">
+          <ScalarProperty Name="MsgID" ColumnName="MsgID" />
+          <ScalarProperty Name="PersonFromID" ColumnName="PersonFromID" />
+          <ScalarProperty Name="PersonToID" ColumnName="PersonToID" />
+          <ScalarProperty Name="DateOfMessage" ColumnName="DateOfMessage" />
+          <ScalarProperty Name="MsgContent" ColumnName="MsgContent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Persons">
+      <EntityTypeMapping TypeName="TripsDBModel.Person">
+        <MappingFragment StoreEntitySet="Persons">
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="TripsDBModel.Post">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="TripTitle" ColumnName="TripTitle" />
+          <ScalarProperty Name="TripDetails" ColumnName="TripDetails" />
+          <ScalarProperty Name="PostDate" ColumnName="PostDate" />
+          <ScalarProperty Name="TripDate" ColumnName="TripDate" />
+          <ScalarProperty Name="TripDestination" ColumnName="TripDestination" />
+          <ScalarProperty Name="TripImage" ColumnName="TripImage" />
+          <ScalarProperty Name="TripPrice" ColumnName="TripPrice" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostsStatus">
+      <EntityTypeMapping TypeName="TripsDBModel.PostsStatu">
+        <MappingFragment StoreEntitySet="PostsStatus">
+          <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+          <ScalarProperty Name="PostsID" ColumnName="PostsID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="TripsDBModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SavedPosts" TypeName="TripsDBModel.SavedPosts" StoreEntitySet="SavedPosts">
+      <EndProperty Name="Persons">
+        <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+      </EndProperty>
+      <EndProperty Name="Posts">
+        <ScalarProperty Name="PostID" ColumnName="PostID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="InsertUsers" FunctionName="TripsDBModel.Store.InsertUsers" />
+    <FunctionImportMapping FunctionImportName="UpdateUsers" FunctionName="TripsDBModel.Store.UpdateUsers" />
+  </EntityContainerMapping>
+</Mapping>
