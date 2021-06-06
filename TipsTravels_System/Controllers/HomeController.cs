@@ -26,5 +26,13 @@ namespace TipsTravels_System.Controllers
 
             return View();
         }
+        
+        // ROUTE POPUP
+        public ActionResult PopupForm()
+        {
+            ViewBag.Message = "PopupForm";
+
+            return View();
+        }
     }
 }

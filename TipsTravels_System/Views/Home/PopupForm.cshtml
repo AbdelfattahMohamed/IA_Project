@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "PopupForm";
+}
+
+<h2>PopupForm</h2>  
+
+    <div class="container">
+        <div class=" row">
+            <button class="btn btn-primary" data-target="#login" data-toggle="modal">Login</button> 
+            <div class="modal" id="login" tabindex="-1">
+                <div class="modal-dialog">
+                    @*START HERE FORM*@
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <label>Login</label> 
+                        </div>
+                        <div class="modal-body">
+                            <form class="form">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" placeholder="Username" id="userName"  class="form-control"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="text" placeholder="Password" id="password"  class="form-control" />
+                                </div>
+
+                            </form>                     
+                        </div>
+                        <div class="modal-footer">
+                            <button value="Login" id="login" class="btn btn-primary">Login</button>
+                            <button value="Close" data-dismiss="modal" id="close" class="btn btn-danger">Close</button>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div> 
+    </div>
+
+

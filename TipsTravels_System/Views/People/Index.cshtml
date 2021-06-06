@@ -1,15 +1,19 @@
-﻿@model IEnumerable<TipsTravels_System.Models.Person>
+﻿@*STYLE LINK HERE*@
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+@model IEnumerable<TipsTravels_System.Models.Person>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="display-2 header_h2">Traveller Dashboard</h2>
 
-<p>
+
+
+<p class="display-2">
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-striped table-bordered">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.FName)

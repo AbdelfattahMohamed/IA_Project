@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    font-family: Helvetica;
+    font-family: Helvetica ;
 
 }
 
@@ -23,4 +23,13 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.header_h2 {
+    color: #008080;
+    text-align: center;
+    font-size: 50px;
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    text-shadow: 0 3px 3px #5ac18e;
+    background-color: aliceblue;
 }
