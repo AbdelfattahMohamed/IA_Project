@@ -163,3 +163,4 @@ E:\03) FCIH\Level 4-Semester 2\Internet Application\Production\project\IA_Projec
 E:\03) FCIH\Level 4-Semester 2\Internet Application\Production\project\IA_Project\TipsTravels_System\obj\Debug\TipsTravels_System.csproj.CopyComplete
 E:\03) FCIH\Level 4-Semester 2\Internet Application\Production\project\IA_Project\TipsTravels_System\obj\Debug\TipsTravels_System.dll
 E:\03) FCIH\Level 4-Semester 2\Internet Application\Production\project\IA_Project\TipsTravels_System\obj\Debug\TipsTravels_System.pdb
+E:\03) FCIH\Level 4-Semester 2\Internet Application\Production\project\IA_Project\TipsTravels_System\obj\Debug\TipsTravels_System.csproj.AssemblyReference.cache
